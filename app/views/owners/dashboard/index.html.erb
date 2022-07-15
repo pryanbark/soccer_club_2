@@ -1,0 +1,32 @@
+<h1>Welcome <%= current_owner.club_name%></h1>
+<%= link_to "Owner Sign Out", destroy_owner_session_path, method: "delete" %>
+
+</br>
+</br>
+<b>Existing Players</b>
+<table>
+  <% current_owner.players.each do |player| %>
+    <tr>
+      <td>
+        <%= player.email%>
+      </td>
+    </tr>
+    </br>
+  <% end %>
+</table>
+
+</br>
+<b>Add Players</b>
+<table>
+  <% Player.available_players.each do |player| %>
+    <tr>
+      <td>
+        <%= player.email%>
+      </td>
+      <td>
+        <%= link_to "Add Player",  owner_registration_url(player_id: player.id), method: :put%>
+      </td>
+    </tr>
+    </br>
+  <% end %>
+</table>
