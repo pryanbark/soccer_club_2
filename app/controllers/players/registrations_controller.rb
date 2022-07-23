@@ -14,6 +14,8 @@ class Players::RegistrationsController < Devise::RegistrationsController
   # POST /resource
   def create
     super
+    Rails.logger.debug current_player.id
+    Rails.logger.debug "HERE I AM"
     redirect_to players_dashboard_index_path && return
   end
 
@@ -25,8 +27,11 @@ class Players::RegistrationsController < Devise::RegistrationsController
   # PUT /resource
   def update
     Rails.logger.debug "Player: #{current_player.id}"
-    if current_player.owner
+    if params[:playing]=="stop" && current_player.owner
       current_player.update(owner_id: nil)
+    else
+      Rails.logger.debug account_update_params
+      current_player.update(account_update_params)
     end
     redirect_to players_dashboard_index_path && return
   end
@@ -66,4 +71,14 @@ class Players::RegistrationsController < Devise::RegistrationsController
   # def after_inactive_sign_up_path_for(resource)
   #   super(resource)
   # end
+
+  private
+
+  def sign_up_params
+    params.require(:player).permit(:email, :full_name, :password, :password_confirmation, :is_available, :position)
+  end
+
+  def account_update_params
+    params.require(:player).permit(:full_name, :is_available, :position)
+  end
 end

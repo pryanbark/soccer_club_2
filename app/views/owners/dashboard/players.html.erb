@@ -1,0 +1,24 @@
+<h1>Welcome <%= current_owner.club_name%></h1>
+<%= link_to "Find/Add New Players", owners_authenticated_root_path %> |  <%= link_to "Owner Sign Out", destroy_owner_session_path, method: "delete" %>
+
+</br>
+</br>
+<b>Existing Players</b>
+<table>
+  <% current_owner.players.each do |player| %>
+    <tr>
+      <td>
+        <%= player.email%>
+      </td>
+      <td>
+        <%= player.full_name%>
+      </td>
+      <td>
+        <%= player.position%>
+      </td>
+      <td>
+        <%= player.is_available ? "Available" : "Un Available"%>
+      </td>
+    </tr>
+  <% end %>
+</table>

@@ -1,32 +1,40 @@
 <h1>Welcome <%= current_owner.club_name%></h1>
-<%= link_to "Owner Sign Out", destroy_owner_session_path, method: "delete" %>
+
+<%= link_to "Profile", edit_owner_registration_path %> | <%= link_to "Team", owners_dashboard_players_path %> | <%= link_to "Owner Sign Out", destroy_owner_session_path, method: "delete" %>
 
 </br>
 </br>
-<b>Existing Players</b>
-<table>
-  <% current_owner.players.each do |player| %>
-    <tr>
-      <td>
-        <%= player.email%>
-      </td>
-    </tr>
-    </br>
-  <% end %>
-</table>
-
+<%= link_to "All", owners_authenticated_root_path %> | <%= link_to "Attack Players", owners_authenticated_root_path(position: "attack") %> | <%= link_to "Defense Players", owners_authenticated_root_path(position: "defense") %> | <%= link_to "Middle Players", owners_authenticated_root_path(position: "middle") %> |
+<% flash.each do |type, msg| %>
+  <div class="alert alert-info view-<%=type%>">
+    <%= msg %>
+  </div>
+<% end %>
+</br>
 </br>
 <b>Add Players</b>
 <table>
-  <% Player.available_players.each do |player| %>
+  <% Player.available_players_by_position(Player::POSITIONS.include?(params[:position]) ? params[:position] : Player::POSITIONS).each do |player| %>
     <tr>
       <td>
         <%= player.email%>
       </td>
       <td>
-        <%= link_to "Add Player",  owner_registration_url(player_id: player.id), method: :put%>
+        <%= player.full_name%>
+      </td>
+      <td>
+        <%= player.position%>
+      </td>
+      <td>
+        <%= player.is_available ? "Available" : "Un Available"%>
+      </td>
+      <td>
+        <% if  player.is_available %>
+          <%= link_to "Recruit",  owner_registration_url(player_id: player.id), method: :put%>
+        <% else %>
+          Player isn't available
+        <% end %>
       </td>
     </tr>
-    </br>
   <% end %>
 </table>

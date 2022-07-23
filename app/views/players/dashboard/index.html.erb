@@ -1,10 +1,14 @@
 <h1>Players Details</h1>
-<p><%=current_player.email%></p>
+<%= link_to "Profile", edit_player_registration_path %> <% if current_player.owner %>| <%= link_to "My Team", players_dashboard_team_path%> <% end %>| <%= link_to "Player Sign Out", destroy_player_session_path, method: "delete" %>
+<p>Name: <%=current_player.full_name%></p>
+<p>Email: <%=current_player.email%></p>
+<p>Is Available: <%=current_player.is_available%></p>
+
 </br>
-<%= link_to "Player Sign Out", destroy_player_session_path, method: "delete" %>
+
 
 </br>
 </br>
 <% unless current_player.owner.nil? %>
-  <%= link_to "Stop playing for the club \"#{current_player.owner.club_name}\"",  player_registration_url, method: :put%>
+  <%= link_to "Stop playing for the club \"#{current_player.owner.club_name}\"",  player_registration_url(playing: "stop"), method: :put%>
 <% end %>

@@ -24,11 +24,23 @@ class Owners::RegistrationsController < Devise::RegistrationsController
 
   # PUT /resource
   def update
-    player = Player.find(params[:player_id])
-    if player&.owner_id.nil?
-      player.update(owner_id: current_owner.id)
+    if params[:player_id]
+      player = Player.find(params[:player_id])
+      if player.is_available && player&.owner_id.nil?
+        if current_owner.players.count<15
+          player.update(owner_id: current_owner.id)
+          flash[:notice] = "Player is added successfully"
+        else
+          flash[:alert] = "Your team has already crossed maximum limit of 15 players"
+        end
+      else
+        flash[:alert] = "Player isnt available for grab"
+      end
+    else
+      current_owner.update(account_update_params)
+      flash[:notice] = "Owner updated successfully"
     end
-    redirect_to owners_dashboard_index_path && return
+    redirect_to owners_dashboard_index_path
   end
 
   # DELETE /resource
@@ -71,5 +83,9 @@ class Owners::RegistrationsController < Devise::RegistrationsController
 
   def sign_up_params
     params.require(:owner).permit(:email, :password, :password_confirmation, :club_name)
+  end
+
+  def account_update_params
+    params.require(:owner).permit(:club_name)
   end
 end

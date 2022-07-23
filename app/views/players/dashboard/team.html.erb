@@ -1,0 +1,43 @@
+<br>
+<%= link_to "Back", players_dashboard_index_path %> |
+<h1>CLUB: <%= current_player.owner.club_name%></h1>
+
+<h2>Team Players</h2>
+<table>
+  <tr>
+    <th>
+      SNO
+    </th>
+    <th>
+      EMAIL
+    </th>
+    <th>
+      FULL NAME
+    </th>
+    <th>
+      POSITION
+    </th>
+    <th>
+      STATUS
+    </th>
+  </tr>
+  <% current_player.owner.players.each_with_index do |player,index| %>
+    <tr>
+      <td>
+        <%= index+1 %>
+      </td>
+      <td>
+        <%= player.email%>
+      </td>
+      <td>
+        <%= player.full_name%>
+      </td>
+      <td>
+        <%= player.position%>
+      </td>
+      <td>
+        <%= player.is_available ? "Available" : "Un Available"%>
+      </td>
+    </tr>
+  <% end %>
+</table>

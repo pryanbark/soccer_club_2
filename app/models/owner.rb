@@ -5,5 +5,6 @@ class Owner < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   has_many :players
-  validates :club_name, presence: true
+  validates :club_name, presence: true, uniqueness: true
+  validates :email, uniqueness: true
 end
