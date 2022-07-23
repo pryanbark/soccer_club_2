@@ -38,6 +38,7 @@ Rails.application.routes.draw do
     authenticated :player do
       namespace :players do
         get 'dashboard/index', as: :authenticated_root
+        get 'dashboard/team'
       end
     end
   end
@@ -46,6 +47,7 @@ Rails.application.routes.draw do
     authenticated :owner do
       namespace :owners do
         get 'dashboard/index', as: :authenticated_root
+        get 'dashboard/players'
       end
     end
   end

@@ -32,7 +32,6 @@ development:
   #username: soccer_club_development
   username: soccer_club_development
   password: rootroot
-      
 
   # The password associated with the postgres role (username).
   #password: postgres
