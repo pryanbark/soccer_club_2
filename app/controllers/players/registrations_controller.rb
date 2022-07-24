@@ -15,8 +15,6 @@ class Players::RegistrationsController < Devise::RegistrationsController
   # POST /resource
   def create
     super
-    Rails.logger.debug current_player.id
-    Rails.logger.debug "HERE I AM"
     redirect_to players_dashboard_index_path && return
   end
 
