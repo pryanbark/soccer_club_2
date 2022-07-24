@@ -1,4 +1,5 @@
 class Players::DashboardController < ApplicationController
+  # This controller manages the dashboard logic of Players
   def index
   end
 

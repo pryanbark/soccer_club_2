@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Players::RegistrationsController < Devise::RegistrationsController
+  # This controller manages the registration logic for Players
   include Accessible
   skip_before_action :check_resource, except: [:new, :create]
   # before_action :configure_sign_up_params, only: [:create]

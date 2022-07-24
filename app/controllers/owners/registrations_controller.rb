@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Owners::RegistrationsController < Devise::RegistrationsController
+# This controller manages the registration logic for Owners
   include Accessible
   skip_before_action :check_resource, except: [:new, :create]
   # before_action :configure_sign_up_params, only: [:create]
